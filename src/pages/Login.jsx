@@ -1,7 +1,25 @@
-export default function Login() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-100">
-      <h1 className="text-3xl font-bold text-blue-700">Login Page</h1>
-    </div>
-  );
+import Card from "../components/Card";
+import Input from "../components/Input";
+import Button from "../components/Button";
+
+const Login = () => {
+    return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <Card>
+                <h2 className="text-3-xl font-bold text-center text-blue-600 mb-6">
+                    Login
+                </h2>
+                <div className="space-y-4">
+                    <input type="text" placeholder="Username" />
+                    <input type="password" placeholder="Password" />
+                </div>
+
+                <div className="mt-6">
+                    <Button text="LOGIN" />
+                </div>
+            </Card>
+        </div>
+    )
 }
+
+export default Login;
