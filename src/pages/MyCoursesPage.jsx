@@ -47,8 +47,8 @@ export default function MyCoursePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex flex-col items-center px-4 py-8">
-      <h1 className="text-3xl sm-text-4xl font-bold text-indigo-600 mb-8 text-center">
-        Kursus Saya
+      <h1 className="text-3xl sm:text-4xl font-bold text-indigo-600 mb-8 text-center">
+        Kursus Video Belajar
       </h1>
 
       <div className="bg-white shadow-lg rounded-2xl p-6 w-full max-w-lg mb-8 border-indigo-100 ">
@@ -67,7 +67,7 @@ export default function MyCoursePage() {
 
           <input
             type="text"
-            placeholder="Judul Kursus"
+            placeholder="Kategori"
             value={newCategory}
             onChange={(e) => setNewCategory(e.target.value)}
             className="w-full border rounded-md p-2 focus:ring-2 focus:ring-indigo-400 outline-none"
@@ -84,13 +84,26 @@ export default function MyCoursePage() {
 
         <button
           onClick={handleAddCourse}
-          className="w-full mt-4 py-2 bg-indigo-600 text-white font-medium rounded-md hover-bg-indigo-700 transition"
+          className="w-full mt-4 py-2 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition"
         >
           Tambah Kursus
         </button>
       </div>
 
-
+      <div className="grid gap-4 w-full max-w-5xl sm:grid-col-2 lg:grid-cols-3">
+        {course.length > 0 ? (
+          course.map((course) => (
+            <CourseCard
+              key={course.id}
+              course={course}
+              onDelete={handleDeleteCourse}
+              onUpdate={handleUpdateCourse}
+            />
+          ))
+        ) : (
+          <p className="text-gray-500 text-center w-full">Belum ada kursus</p>
+        )}
+      </div>
     </div>
   );
 }
