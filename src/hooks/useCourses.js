@@ -8,7 +8,7 @@ export function useCourses() {
   const fetchCourses = async () => {
     setLoading(true);
     try {
-      const res = await api.gey("/courses");
+      const res = await api.get("/course");
       setCourses(res.data);
     } catch (error) {
       console.error("Gagal memuat data:", error);
@@ -19,16 +19,16 @@ export function useCourses() {
 
   const addCourse = async (newCourse) => {
     try {
-      const res = await api.post("/courses", newCourse);
+      const res = await api.post("/course", newCourse);
       setCourses([...courses, res.data]);
     } catch (error) {
       console.error("Gagal menambahkan data:", error);
     }
   };
 
-  const updateCourse = async (IdleDeadline, updatedTitle) => {
+  const updateCourse = async (id, updatedTitle) => {
     try {
-      const res = await api.put(`/courses/${id}`, { title: updatedTitle });
+      const res = await api.put(`/course/${id}`, { title: updatedTitle });
       setCourses(
         courses.map((course) =>
           course.id === id ? { ...course, ...res.data } : course

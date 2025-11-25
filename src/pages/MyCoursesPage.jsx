@@ -1,48 +1,30 @@
 import { useState } from "react";
+import { useCourses } from "../hooks/useCourses";
 import CourseCard from "../components/CourseCard";
 
 export default function MyCoursePage() {
-  const [course, setCourse] = useState([
-    { id: 1, title: "Dasar React JS", category: "Frontend", duration: "2 Jam" },
-    {
-      id: 2,
-      title: "Belajar Tailwind CSS",
-      category: "UI Design",
-      duration: "1.5 Jam",
-    },
-  ]);
+  const { courses, loading, addCourse, updateCourse, deleteCourse } =
+    useCourses();
 
   const [newTitle, setNewTitle] = useState("");
   const [newCategory, setNewCategory] = useState("");
   const [newDuration, setNewDuration] = useState("");
 
   const handleAddCourse = () => {
-    if (!newTitle || !newCategory || !newDuration)
-      return alert("Lengkapi Semua Kolom!");
-    const newCourse = {
-      id: Date.now(),
+    if (!newTitle || !newCategory || !newDuration) {
+      alert("Lengkapi semua kolom!");
+      return;
+    }
+
+    addCourse({
       title: newTitle,
       category: newCategory,
       duration: newDuration,
-    };
-
-    setCourse([...course, newCourse]);
+    });
 
     setNewTitle("");
     setNewCategory("");
     setNewDuration("");
-  };
-
-  const handleUpdateCourse = (id, updatedTitle) => {
-    setCourse(
-      course.map((course) =>
-        course.id === id ? { ...course, title: updatedTitle } : course
-      )
-    );
-  };
-
-  const handleDeleteCourse = (id) => {
-    setCourse(course.filter((course) => course.id !== id));
   };
 
   return (
@@ -90,20 +72,20 @@ export default function MyCoursePage() {
         </button>
       </div>
 
-      <div className="grid gap-4 w-full max-w-5xl sm:grid-col-2 lg:grid-cols-3">
-        {course.length > 0 ? (
-          course.map((course) => (
+      {loading ? (
+        <p className="text-gray-600">Memuat data...</p>
+      ) : (
+        <div className="grid gap-4 w-full max-w-5xl sm:grid-cols-2 lg:grid-cols-3">
+          {courses.map((course) => (
             <CourseCard
               key={course.id}
               course={course}
-              onDelete={handleDeleteCourse}
-              onUpdate={handleUpdateCourse}
+              onDelete={deleteCourse}
+              onUpdate={updateCourse}
             />
-          ))
-        ) : (
-          <p className="text-gray-500 text-center w-full">Belum ada kursus</p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

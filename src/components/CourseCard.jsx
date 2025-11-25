@@ -1,8 +1,13 @@
 import { useState } from "react";
 
-export default function CourseCard({ course, onDelete, onUpdate }) {
+export default function CourseCard({ course, onDelete, onUpdate, loading }) {
   const [isEditing, setIsEditing] = useState(false);
   const [updatedTitle, setUpdatedTitle] = useState(course.title);
+
+  const handleUpdate = () => {
+    onUpdate(course.id, updatedTitle);
+    setIsEditing(false);
+  };
 
   return (
     <div>
@@ -27,10 +32,7 @@ export default function CourseCard({ course, onDelete, onUpdate }) {
       <div className="flex flex-col sm:flex-row gap-2 mt-auto">
         {isEditing ? (
           <button
-            onClick={() => {
-              onUpdate(course.id, updatedTitle);
-              setIsEditing(false);
-            }}
+            onClick={handleUpdate}
             className="px-3 py-2 bg-green-500 text-white rounded-md text-sm hover:bg-green-600 transition"
           >
             Simpan
